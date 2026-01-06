@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  stable:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cloud-native-demo:stable
+    container_name: cloud-native-demo-stable
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - APP_VERSION=stable
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - canary
+
+  canary:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cloud-native-demo:canary
+    container_name: cloud-native-demo-canary
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - APP_VERSION=canary
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - canary
+
+  nginx:
+    image: nginx:alpine
+    container_name: cloud-native-demo-nginx
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - stable
+      - canary
+    networks:
+      - canary
+
+networks:
+  canary:
+    driver: bridge

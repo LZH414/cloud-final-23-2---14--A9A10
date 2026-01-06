@@ -1,0 +1,6 @@
+# Trivy Ignore File
+# Format: <vulnerability-id> or <package-name>:<vulnerability-id>
+
+# Example: Ignore specific vulnerabilities during development
+# CVE-2021-1234
+# nodejs-lodash:4.17.21

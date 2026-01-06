@@ -1,0 +1,30 @@
+# Security Scan Configuration
+
+# Trivy configuration
+# https://aquasecurity.github.io/trivy/latest/
+
+# Severity levels to report
+# CRITICAL, HIGH, MEDIUM, LOW, UNKNOWN
+severity: ["CRITICAL", "HIGH", "MEDIUM"]
+
+# Vulnerability types to scan
+# os, library
+vulnerability:
+  type: ["os", "library"]
+
+# Security checks to enable
+# config, license, secret
+security-checks:
+  - config
+  - license
+  - secret
+
+# Output format
+# json, sarif, table, etc.
+format: "sarif"
+
+# Exit code when vulnerabilities found
+exit-code: 1
+
+# Ignore file for vulnerabilities
+# .trivyignore
